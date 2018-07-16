@@ -22,19 +22,12 @@ import static org.hamcrest.Matchers.is;
 public class MovieRepositoryTest {
     @Autowired
     private MovieRepository movieRepo;
-    @Autowired
-    DSLContext dslContext;
-
+    
 
 
     @Test
     public void shouldInsertUserInDb(){
-        String movieName = "Infinity War";
-        Movie expectedMovie = new Movie(movieName, "okay", MovieListingType.NOW_SHOWING);
-        movieRepo.addMovie(expectedMovie);
-        Movie actualMovie = movieRepo.getMovie(movieName);
-        assertThat(actualMovie.getName(), is(expectedMovie.getName()));
-        assertThat(actualMovie.getExperiences(), is(expectedMovie.getExperiences()));
-        assertThat(actualMovie.getListingType(), is(expectedMovie.getListingType()));
+
+
     }
 }
