@@ -2,36 +2,68 @@ package spicinemas.api.model;
 
 import lombok.EqualsAndHashCode;
 import spicinemas.api.type.MovieListingType;
-@EqualsAndHashCode(exclude = {"id"})
+@EqualsAndHashCode()
 public class Movie {
-    private Long id;
-    private String name;
-    private String experiences;
-    private MovieListingType listingType;
-
-    public Movie(String name, String experiences, MovieListingType listingType) {
-        this.name = name;
-        this.experiences = experiences;
-        this.listingType = listingType;
+    private String title;
+    private String imdbID;
+    private String imdbRating;
+    private String[] soundEffects;
+    private String poster;
+    private String[] stills;
+    private String plot;
+    private MovieListingType movieListingType;
+    public Movie(String title, String imdbID,MovieListingType movieListingType )
+    {
+        this.title=title;
+        this.imdbID=imdbID;
+        this.movieListingType=movieListingType;
     }
 
-    public Movie() {
-
+    public void setImdbRating(String imdbRating) {
+        this.imdbRating = imdbRating;
     }
 
-    public Long getId() {
-        return id;
+    public void setPlot(String plot) {
+        this.plot = plot;
     }
 
-    public String getName() {
-        return name;
+    public void setPoster(String poster) {
+        this.poster = poster;
     }
 
-    public String getExperiences() {
-        return experiences;
+    public void setStills(String[] stills) {
+        this.stills = stills;
     }
 
-    public MovieListingType getListingType() {
-        return listingType;
+    public void setSoundEffects(String[] soundEffects) {
+        this.soundEffects = soundEffects;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getImdbID() {
+        return imdbID;
+    }
+
+    public String getImdbRating() {
+        return imdbRating;
+    }
+
+    public String[] getSoundEffects() {
+        return soundEffects;
+    }
+
+    public String getPoster() {
+        return poster;
+    }
+
+    public String[] getStills() {
+        return stills;
+    }
+
+    public String getPlot() {
+        return plot;
     }
 }
