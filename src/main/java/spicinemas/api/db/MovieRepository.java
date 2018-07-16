@@ -22,10 +22,7 @@ public class MovieRepository {
     }
 
     public void addMovie(Movie movie) {
-        dsl.insertInto(DSL.table("MOVIE"), DSL.field("NAME"), DSL.field("EXPERIENCES"), DSL.field("LISTING_TYPE"))
-                .values(movie.getName(), movie.getExperiences(), movie.getListingType().toString())
-                .execute();
-
+        
     }
 
     public Movie getMovie(String name) {
