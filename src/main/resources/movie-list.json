@@ -42,6 +42,7 @@
     "Writer":"J.K. Rowling (novel), Steve Kloves (screenplay)",
     "Year":"2002",
     "imdbID":"tt0295297",
+    "listingType": "NOW_SHOWING",
     "imdbRating":"7.4",
     "imdbVotes":"444,553"
   },
@@ -88,6 +89,7 @@
     "Writer":"Steve Kloves (screenplay), J.K. Rowling (novel)",
     "Year":"2011",
     "imdbID":"tt1201607",
+    "listingType": "NOW_SHOWING",
     "imdbRating":"8.1",
     "imdbVotes":"631,728"
   }

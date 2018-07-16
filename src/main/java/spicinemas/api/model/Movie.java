@@ -1,6 +1,8 @@
 package spicinemas.api.model;
 
 import lombok.EqualsAndHashCode;
+
+import org.jooq.tools.json.JSONObject;
 import spicinemas.api.type.MovieListingType;
 @EqualsAndHashCode()
 public class Movie {
@@ -12,11 +14,18 @@ public class Movie {
     private String[] stills;
     private String plot;
     private MovieListingType movieListingType;
-    public Movie(String title, String imdbID,MovieListingType movieListingType )
-    {
-        this.title=title;
-        this.imdbID=imdbID;
-        this.movieListingType=movieListingType;
+//    public Movie(String title, String imdbID,MovieListingType movieListingType )
+//    {
+//        this.title=title;
+//        this.imdbID=imdbID;
+//        this.movieListingType=movieListingType;
+//    }
+
+    public Movie(JSONObject obj) {
+        this.title = (String) obj.get("Title");
+        this.imdbID = (String) obj.get("imdbID");
+        this.imdbRating = (String) obj.get("imdbRating");
+        this.movieListingType = MovieListingType.valueOf((String)obj.get("listingType"));
     }
 
     public void setImdbRating(String imdbRating) {
@@ -65,5 +74,17 @@ public class Movie {
 
     public String getPlot() {
         return plot;
+    }
+
+    public MovieListingType getMovieListingType() {
+        return movieListingType;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null || !(obj instanceof Movie)) {
+            return false;
+        }
+        return imdbID.equals(((Movie) obj).imdbID);
     }
 }

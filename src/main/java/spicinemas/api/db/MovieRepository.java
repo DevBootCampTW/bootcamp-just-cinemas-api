@@ -1,21 +1,29 @@
 package spicinemas.api.db;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+import spicinemas.api.config.db.Reader;
 import spicinemas.api.model.Movie;
 import spicinemas.api.type.MovieListingType;
 
-import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Repository
+@Transactional
 public class MovieRepository {
 
-    public List<Movie> getNowShowingMovies() {
-        return Collections.emptyList();
+    private Map<String, Movie> movieMap;
+
+    @Autowired
+    MovieRepository(Reader reader) {
+        movieMap = reader.readMovies();
     }
 
-    public void addMovie(Movie movie) {
-
+    public List<Movie> getNowShowingMovies() {
+        return movieMap.values().stream().filter(movie -> MovieListingType.NOW_SHOWING.equals(movie.getMovieListingType())).collect(Collectors.toList());
     }
 
     public Movie getMovie(String imdbID) {
