@@ -2,6 +2,7 @@ package spicinemas.api.controller;
 
 import org.springframework.web.bind.annotation.*;
 import spicinemas.api.db.MovieRepository;
+import spicinemas.api.error.MovieNotFoundException;
 import spicinemas.api.model.Movie;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -12,8 +13,13 @@ import java.util.List;
 
 @RestController
 public class MovieController {
-    @Autowired
+
     MovieRepository movieRepo;
+
+    @Autowired
+    public MovieController(MovieRepository movieRepo) {
+        this.movieRepo = movieRepo;
+    }
 
     @RequestMapping(value = "/init",
             method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -29,7 +35,12 @@ public class MovieController {
     @RequestMapping(value = "/movies/{imdbID}",
             method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public Movie getMovie(@PathVariable("imdbID") String imdbID) {
-        return movieRepo.getMovie(imdbID);
+        Movie movie = movieRepo.getMovie(imdbID);
+
+        if(null == movie){
+            throw new MovieNotFoundException();
+        }
+        return movie;
     }
 
 }
