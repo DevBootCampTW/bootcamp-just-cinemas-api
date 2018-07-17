@@ -21,11 +21,6 @@ public class MovieController {
         this.movieRepo = movieRepo;
     }
 
-    @RequestMapping(value = "/init",
-            method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public void init() {
-        }
-
     @RequestMapping(value = "/movies/now-showing",
             method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Movie> getNowShowingMovies() {

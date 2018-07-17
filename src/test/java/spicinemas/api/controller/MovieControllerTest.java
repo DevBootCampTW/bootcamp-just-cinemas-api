@@ -1,5 +1,6 @@
 package spicinemas.api.controller;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -10,6 +11,8 @@ import spicinemas.api.error.MovieNotFoundException;
 import spicinemas.api.model.Movie;
 import spicinemas.api.type.MovieListingType;
 
+import java.util.ArrayList;
+import java.util.List;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
 
@@ -24,6 +27,28 @@ public class MovieControllerTest {
     @Before
     public void setUp(){
         controller = new MovieController(movieRepo);
+    }
+
+    @Test
+    public void getNowShowingMoviesReturnMovieList() {
+
+        Movie movie = new Movie.MovieBuilder("Harry potter", "123", MovieListingType.NOW_SHOWING).build();
+        List<Movie> movieList = new ArrayList<>();
+        movieList.add(movie);
+        when(movieRepo.getNowShowingMovies()).thenReturn(movieList);
+
+        Assert.assertEquals(movieList, controller.getNowShowingMovies());
+    }
+
+    @Test(expected = Exception.class)
+    public void getNowShowingMoviesThrowsExceptionInRepoThenShouldFail() {
+
+        Movie movie = new Movie.MovieBuilder("Harry potter", "123", MovieListingType.NOW_SHOWING).build();
+        List<Movie> movieList = new ArrayList<>();
+        movieList.add(movie);
+        when(movieRepo.getNowShowingMovies()).thenThrow(new Exception());
+
+        controller.getNowShowingMovies();
     }
 
     @Test
