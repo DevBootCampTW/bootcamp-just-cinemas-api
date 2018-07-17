@@ -51,4 +51,28 @@ public class MovieRepositoryTest {
         Assert.assertEquals(movieList, expectedList);
 
     }
+
+    @Test
+    public void testGetMovieWhenMatchIsFoundShouldNotBeNull()
+    {
+        Movie movie = movieRepo.getMovie("tt100");
+
+        Assert.assertEquals("tt100", movie.getImdbID());
+    }
+
+    @Test
+    public void testGetMovieWhenNoMatchIsFoundShouldBeNull()
+    {
+        Movie movie = movieRepo.getMovie("notAnImdbMovieId");
+
+        Assert.assertNull(movie);
+    }
+
+    @Test
+    public void testGetMovieWhenNullIsPassedThenShouldReturnNull()
+    {
+        Movie movie = movieRepo.getMovie(null);
+
+        Assert.assertNull(movie);
+    }
 }
