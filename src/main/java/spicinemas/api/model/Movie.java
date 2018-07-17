@@ -1,10 +1,11 @@
 package spicinemas.api.model;
 
-import lombok.EqualsAndHashCode;
 
+import org.jooq.tools.json.JSONArray;
 import org.jooq.tools.json.JSONObject;
 import spicinemas.api.type.MovieListingType;
-@EqualsAndHashCode()
+import spicinemas.api.util.Helper;
+
 public class Movie {
     private String title;
     private String imdbID;
@@ -14,38 +15,11 @@ public class Movie {
     private String[] stills;
     private String plot;
     private MovieListingType movieListingType;
-//    public Movie(String title, String imdbID,MovieListingType movieListingType )
-//    {
-//        this.title=title;
-//        this.imdbID=imdbID;
-//        this.movieListingType=movieListingType;
-//    }
-
-    public Movie(JSONObject obj) {
-        this.title = (String) obj.get("Title");
-        this.imdbID = (String) obj.get("imdbID");
-        this.imdbRating = (String) obj.get("imdbRating");
-        this.movieListingType = MovieListingType.valueOf((String)obj.get("listingType"));
-    }
-
-    public void setImdbRating(String imdbRating) {
-        this.imdbRating = imdbRating;
-    }
-
-    public void setPlot(String plot) {
-        this.plot = plot;
-    }
-
-    public void setPoster(String poster) {
-        this.poster = poster;
-    }
-
-    public void setStills(String[] stills) {
-        this.stills = stills;
-    }
-
-    public void setSoundEffects(String[] soundEffects) {
-        this.soundEffects = soundEffects;
+    private Movie(String title, String imdbID,MovieListingType movieListingType)
+    {
+        this.title=title;
+        this.imdbID=imdbID;
+        this.movieListingType=movieListingType;
     }
 
     public String getTitle() {
@@ -79,6 +53,57 @@ public class Movie {
     public MovieListingType getMovieListingType() {
         return movieListingType;
     }
+
+    public static class MovieBuilder
+    {
+        private Movie movie;
+        public MovieBuilder(String title, String imdbID,MovieListingType movieListingType)
+        {
+            movie = new Movie(title, imdbID, movieListingType);
+
+        }
+
+        public MovieBuilder imdbRating(String imdbRating){
+            movie.imdbRating=imdbRating;
+            return this;
+        }
+        public MovieBuilder soundEffect(String soundEffects[]){
+            movie.soundEffects=soundEffects;
+            return this;
+        }
+        public MovieBuilder poster(String poster){
+            movie.poster=poster;
+            return this;
+        }
+        public MovieBuilder stills(String stills[]){
+            movie.stills=stills;
+            return this;
+        }
+        public MovieBuilder plot(String plot){
+            movie.plot=plot;
+            return this;
+        }
+        public Movie build()
+        {
+            return movie;
+        }
+    }
+
+
+    public static Movie convertJsonToMovie(JSONObject json)
+    {
+        MovieListingType listingType = MovieListingType.valueOf((String)json.get("listingType"));
+
+        return new Movie.MovieBuilder((String)json.get("Title"),(String)json.get("imdbID"),listingType)
+                .plot((String)json.get("Plot"))
+                .poster((String)json.get("Poster"))
+                .imdbRating((String)json.get("imdbRating"))
+                .soundEffect(Helper.convertJsonArrayToStringArray((JSONArray) json.get("SoundEffects")))
+                .stills(Helper.convertJsonArrayToStringArray((JSONArray) json.get("Stills")))
+                .build();
+    }
+
+
 
     @Override
     public boolean equals(Object obj) {

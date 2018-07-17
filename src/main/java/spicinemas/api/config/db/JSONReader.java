@@ -15,9 +15,9 @@ import java.util.Map;
 public class JSONReader implements Reader{
 
 private InputStreamReader reader;
-    JSONReader() throws FileNotFoundException {
-    String path = "src/main/resources/movie-list.json";
-        reader = new FileReader(path);
+   public JSONReader() throws FileNotFoundException {
+    String path = "out/production/resources/movie-list.json";
+    reader = new FileReader(path);
     }
 
     @Override
@@ -28,7 +28,7 @@ private InputStreamReader reader;
             JSONArray movieArray = (JSONArray)parser.parse(reader);
             movieMap = new HashMap<>();
             for (Object o : movieArray) {
-                Movie movie = new Movie((JSONObject) o);
+                Movie movie = Movie.convertJsonToMovie((JSONObject) o);
                 movieMap.put(movie.getImdbID(), movie);
             }
         }
