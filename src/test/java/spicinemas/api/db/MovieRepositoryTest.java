@@ -27,8 +27,10 @@ public class MovieRepositoryTest {
         public void setUp() {
             Reader reader = Mockito.mock(JSONReader.class);
             Map<String,Movie> testMap = new HashMap<>();
-            Movie movie = new Movie.MovieBuilder("Test","tt100",MovieListingType.NOW_SHOWING).build();
-            testMap.put(movie.getImdbID(),movie);
+            Movie movie1 = new Movie.MovieBuilder("Test1","tt100",MovieListingType.NOW_SHOWING).build();
+            Movie movie2 = new Movie.MovieBuilder("Test2","tt200",MovieListingType.NOW_SHOWING).build();
+            testMap.put(movie1.getImdbID(),movie1);
+            testMap.put(movie2.getImdbID(),movie2);
             Mockito.when(reader.readMovies()).thenReturn(testMap);
             movieRepo = new MovieRepository(reader);
         }
@@ -41,13 +43,15 @@ public class MovieRepositoryTest {
     }
 
     @Test
-    public void testGetNowShowingMovieListValid(){
+    public void testGetNowShowingMovieListSorted(){
 
         List<Movie> movieList = movieRepo.getNowShowingMovies();
         List<Movie> expectedList = new LinkedList<>();
 
-        Movie movie = new Movie.MovieBuilder("Test","tt100",MovieListingType.NOW_SHOWING).build();
-        expectedList.add(movie);
+        Movie movie1 = new Movie.MovieBuilder("Test1","tt100",MovieListingType.NOW_SHOWING).build();
+        Movie movie2 = new Movie.MovieBuilder("Test2","tt200",MovieListingType.NOW_SHOWING).build();
+        expectedList.add(movie1);
+        expectedList.add(movie2);
         Assert.assertEquals(movieList, expectedList);
 
     }

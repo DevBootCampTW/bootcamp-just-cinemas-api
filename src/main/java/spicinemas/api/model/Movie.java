@@ -1,11 +1,13 @@
 package spicinemas.api.model;
 
 
+import lombok.EqualsAndHashCode;
 import org.jooq.tools.json.JSONArray;
 import org.jooq.tools.json.JSONObject;
 import spicinemas.api.type.MovieListingType;
 import spicinemas.api.util.Helper;
 
+@EqualsAndHashCode
 public class Movie {
     private String title;
     private String imdbID;
@@ -54,6 +56,7 @@ public class Movie {
         return movieListingType;
     }
 
+    @EqualsAndHashCode
     public static class MovieBuilder
     {
         private Movie movie;
@@ -103,13 +106,4 @@ public class Movie {
                 .build();
     }
 
-
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null || !(obj instanceof Movie)) {
-            return false;
-        }
-        return imdbID.equals(((Movie) obj).imdbID);
-    }
 }
