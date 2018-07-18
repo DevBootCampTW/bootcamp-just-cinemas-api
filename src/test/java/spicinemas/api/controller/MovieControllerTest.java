@@ -6,7 +6,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import spicinemas.api.error.MovieNotFoundException;
 import spicinemas.api.model.Movie;
 import spicinemas.api.model.filters.MovieFilter;
 import spicinemas.api.model.type.MovieListingType;
@@ -39,7 +38,7 @@ public class MovieControllerTest {
         movieList.add(movie);
         when(movieService.getMovieList(any(MovieFilter.class))).thenReturn(movieList);
 
-        Assert.assertEquals(movieList, controller.getNowShowingMovies());
+        Assert.assertEquals(movieList, controller.getMovies("NOW_SHOWING"));
     }
 
     @Test
