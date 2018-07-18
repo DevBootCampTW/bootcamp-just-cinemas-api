@@ -28,7 +28,7 @@ repositories {
 }
 
 dependencies {
-	compileOnly 'org.projectlombok:lombok:1.16.20'
+	compileOnly 'org.projectlombok:lombok:1.18.0'
 	compile('org.springframework.boot:spring-boot-starter-jooq')
 	compile('org.springframework.boot:spring-boot-starter-security')
 	compile('org.springframework.boot:spring-boot-starter-web')
