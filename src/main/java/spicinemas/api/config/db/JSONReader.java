@@ -16,7 +16,7 @@ public class JSONReader implements Reader{
 
 private InputStreamReader reader;
    public JSONReader() throws FileNotFoundException {
-    String path = "out/production/resources/movie-list.json";
+    String path = "build/resources/main/movie-list.json";
     reader = new FileReader(path);
     }
 
