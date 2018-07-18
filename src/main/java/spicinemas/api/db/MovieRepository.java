@@ -4,12 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import spicinemas.api.config.db.Reader;
 import spicinemas.api.model.Movie;
-import spicinemas.api.type.MovieListingType;
 
-import java.util.Comparator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
 @Repository
 public class MovieRepository {
@@ -21,18 +20,13 @@ public class MovieRepository {
         movieMap = reader.readMovies();
     }
 
-    public List<Movie> getNowShowingMovies() {
-        return movieMap.values().stream()
-                .filter(movie -> MovieListingType.NOW_SHOWING.equals(movie.getMovieListingType()))
-                .sorted(Comparator.comparing(Movie::getTitle))
-                .collect(Collectors.toList());
+    public Optional<Movie> getMovie(String imdbID) {
+       return   Optional.ofNullable(movieMap.get(imdbID));
+
+
     }
 
-
-
-    public Movie getMovie(String imdbID) {
-
-        return movieMap.get(imdbID);
+    public List<Movie> getAllMovies() {
+        return new LinkedList<>(movieMap.values());
     }
-
 }

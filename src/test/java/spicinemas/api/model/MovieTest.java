@@ -6,7 +6,7 @@ import org.jooq.tools.json.JSONParser;
 import org.jooq.tools.json.ParseException;
 import org.junit.Assert;
 import org.junit.Test;
-import spicinemas.api.type.MovieListingType;
+import spicinemas.api.model.type.MovieListingType;
 import spicinemas.api.util.Helper;
 
 public class MovieTest {

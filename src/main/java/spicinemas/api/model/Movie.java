@@ -2,12 +2,16 @@ package spicinemas.api.model;
 
 
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import org.jooq.tools.json.JSONArray;
 import org.jooq.tools.json.JSONObject;
-import spicinemas.api.type.MovieListingType;
+import spicinemas.api.model.type.MovieLanguage;
+import spicinemas.api.model.type.MovieListingType;
+import spicinemas.api.model.type.MovieLocation;
 import spicinemas.api.util.Helper;
 
 @EqualsAndHashCode
+@Getter
 public class Movie {
     private String title;
     private String imdbID;
@@ -17,43 +21,14 @@ public class Movie {
     private String[] stills;
     private String plot;
     private MovieListingType movieListingType;
+    private MovieLocation location;
+    private MovieLanguage language;
+
     private Movie(String title, String imdbID,MovieListingType movieListingType)
     {
         this.title=title;
         this.imdbID=imdbID;
         this.movieListingType=movieListingType;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public String getImdbID() {
-        return imdbID;
-    }
-
-    public String getImdbRating() {
-        return imdbRating;
-    }
-
-    public String[] getSoundEffects() {
-        return soundEffects;
-    }
-
-    public String getPoster() {
-        return poster;
-    }
-
-    public String[] getStills() {
-        return stills;
-    }
-
-    public String getPlot() {
-        return plot;
-    }
-
-    public MovieListingType getMovieListingType() {
-        return movieListingType;
     }
 
     @EqualsAndHashCode
@@ -89,6 +64,16 @@ public class Movie {
         public Movie build()
         {
             return movie;
+        }
+
+        public MovieBuilder location(MovieLocation location) {
+            movie.location = location;
+            return this;
+        }
+
+        public MovieBuilder language(MovieLanguage language) {
+            movie.language = language;
+            return this;
         }
     }
 

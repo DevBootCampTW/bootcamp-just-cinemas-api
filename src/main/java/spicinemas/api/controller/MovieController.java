@@ -6,36 +6,35 @@ import spicinemas.api.error.MovieNotFoundException;
 import spicinemas.api.model.Movie;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import spicinemas.api.type.MovieListingType;
+import spicinemas.api.model.filters.MovieFilter;
+import spicinemas.api.service.MovieService;
 
-import javax.websocket.server.PathParam;
 import java.util.List;
 
 @RestController
 public class MovieController {
 
-    MovieRepository movieRepo;
+    private MovieService movieService;
 
     @Autowired
-    public MovieController(MovieRepository movieRepo) {
-        this.movieRepo = movieRepo;
+    public MovieController(MovieService movieService) {
+        this.movieService = movieService;
     }
 
     @RequestMapping(value = "/movies/now-showing",
             method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Movie> getNowShowingMovies() {
-        return movieRepo.getNowShowingMovies();
+
+        MovieFilter filter = new MovieFilter();
+        return movieService.getMovieList(filter);
     }
 
     @RequestMapping(value = "/movies/{imdbID}",
             method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public Movie getMovie(@PathVariable("imdbID") String imdbID) {
-        Movie movie = movieRepo.getMovie(imdbID);
+        return movieService.getMovie(imdbID);
 
-        if(null == movie){
-            throw new MovieNotFoundException();
-        }
-        return movie;
+
     }
 
 }
