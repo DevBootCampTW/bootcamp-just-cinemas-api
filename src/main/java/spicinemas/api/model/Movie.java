@@ -1,8 +1,6 @@
 package spicinemas.api.model;
 
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
 import org.jooq.tools.json.JSONArray;
 import org.jooq.tools.json.JSONObject;
 import spicinemas.api.model.type.MovieLanguage;
@@ -10,8 +8,9 @@ import spicinemas.api.model.type.MovieListingType;
 import spicinemas.api.model.type.MovieLocation;
 import spicinemas.api.util.Helper;
 
-@EqualsAndHashCode
-@Getter
+import java.util.Arrays;
+import java.util.Objects;
+
 public class Movie {
     private String title;
     private String imdbID;
@@ -24,14 +23,13 @@ public class Movie {
     private MovieLocation location;
     private MovieLanguage language;
 
-    private Movie(String title, String imdbID,MovieListingType movieListingType)
+    private Movie(String title, String imdbID, MovieListingType movieListingType)
     {
         this.title=title;
         this.imdbID=imdbID;
         this.movieListingType=movieListingType;
     }
 
-    @EqualsAndHashCode
     public static class MovieBuilder
     {
         private Movie movie;
@@ -90,5 +88,72 @@ public class Movie {
                 .stills(Helper.convertJsonArrayToStringArray((JSONArray) json.get("Stills")))
                 .build();
     }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getImdbID() {
+        return imdbID;
+    }
+
+    public String getImdbRating() {
+        return imdbRating;
+    }
+
+    public String[] getSoundEffects() {
+        return soundEffects;
+    }
+
+    public String getPoster() {
+        return poster;
+    }
+
+    public String[] getStills() {
+        return stills;
+    }
+
+    public String getPlot() {
+        return plot;
+    }
+
+    public MovieListingType getMovieListingType() {
+        return movieListingType;
+    }
+
+    public MovieLocation getLocation() {
+        return location;
+    }
+
+    public MovieLanguage getLanguage() {
+        return language;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Movie movie = (Movie) o;
+        return Objects.equals(title, movie.title) &&
+                Objects.equals(imdbID, movie.imdbID) &&
+                Objects.equals(imdbRating, movie.imdbRating) &&
+                Arrays.equals(soundEffects, movie.soundEffects) &&
+                Objects.equals(poster, movie.poster) &&
+                Arrays.equals(stills, movie.stills) &&
+                Objects.equals(plot, movie.plot) &&
+                movieListingType == movie.movieListingType &&
+                location == movie.location &&
+                language == movie.language;
+    }
+
+    @Override
+    public int hashCode() {
+
+        int result = Objects.hash(title, imdbID, imdbRating, poster, plot, movieListingType, location, language);
+        result = 31 * result + Arrays.hashCode(soundEffects);
+        result = 31 * result + Arrays.hashCode(stills);
+        return result;
+    }
+
 
 }
