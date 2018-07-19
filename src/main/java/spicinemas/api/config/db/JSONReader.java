@@ -5,6 +5,7 @@ import org.jooq.tools.json.JSONObject;
 import org.jooq.tools.json.JSONParser;
 import org.springframework.stereotype.Component;
 import spicinemas.api.model.Movie;
+import spicinemas.api.util.Helper;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -28,7 +29,7 @@ private InputStreamReader reader;
             JSONArray movieArray = (JSONArray)parser.parse(reader);
             movieMap = new HashMap<>();
             for (Object o : movieArray) {
-                Movie movie = Movie.convertJsonToMovie((JSONObject) o);
+                Movie movie = Helper.convertJsonToMovie((JSONObject) o);
                 movieMap.put(movie.getImdbID(), movie);
             }
         }

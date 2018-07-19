@@ -75,20 +75,6 @@ public class Movie {
         }
     }
 
-
-    public static Movie convertJsonToMovie(JSONObject json)
-    {
-        MovieListingType listingType = MovieListingType.valueOf((String)json.get("listingType"));
-
-        return new Movie.MovieBuilder((String)json.get("Title"),(String)json.get("imdbID"),listingType)
-                .plot((String)json.get("Plot"))
-                .poster((String)json.get("Poster"))
-                .imdbRating((String)json.get("imdbRating"))
-                .soundEffect(Helper.convertJsonArrayToStringArray((JSONArray) json.get("SoundEffects")))
-                .stills(Helper.convertJsonArrayToStringArray((JSONArray) json.get("Stills")))
-                .build();
-    }
-
     public String getTitle() {
         return title;
     }
