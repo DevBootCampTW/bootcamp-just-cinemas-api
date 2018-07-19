@@ -5,8 +5,11 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import spicinemas.api.error.InvalidRequestException;
 import spicinemas.api.model.Movie;
+import spicinemas.api.model.filters.LanguageFilter;
 import spicinemas.api.model.filters.MovieFilter;
+import spicinemas.api.model.type.MovieLanguage;
 import spicinemas.api.model.type.MovieListingType;
+import spicinemas.api.model.type.MovieLocation;
 import spicinemas.api.service.MovieService;
 
 import java.util.List;
@@ -31,19 +34,28 @@ public class MovieController {
 
     @RequestMapping(value = "/movies",
             method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Movie> getMovies(@RequestParam(value = "listingType", defaultValue = "") String listingType) {
+    public List<Movie> getMovies(
+            @RequestParam(value = "listingType", defaultValue = "") String listingType,
+            @RequestParam(value = "language", defaultValue = "") String language,
+            @RequestParam(value = "location", defaultValue = "") String location) {
 
-        MovieFilter filter = getMovieFilter(listingType);
+        MovieFilter filter = getMovieFilter(listingType, language, location);
 
         return movieService.getMovieList(filter);
     }
 
-    private MovieFilter getMovieFilter(String listingType) {
+    private MovieFilter getMovieFilter(String listingType, String language, String location) {
         MovieFilter filter = new MovieFilter();
 
         try {
             if (isValidParam(listingType)) {
                 filter.addListingTypeFilter(MovieListingType.valueOf(listingType));
+            }
+            if(isValidParam(language)){
+                filter.addLanguageFilter(MovieLanguage.valueOf(language));
+            }
+            if(isValidParam(location)){
+                filter.addLocationFilter(MovieLocation.valueOf(location));
             }
         } catch (IllegalArgumentException e)
         {
