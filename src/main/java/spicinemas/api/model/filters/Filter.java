@@ -2,9 +2,9 @@ package spicinemas.api.model.filters;
 
 import spicinemas.api.model.Movie;
 
-import java.util.List;
+import java.util.stream.Stream;
 
 public interface Filter {
 
-    List<Movie> filter(List<Movie> movie);
+    Stream<Movie> filter(Stream<Movie> movie);
 }

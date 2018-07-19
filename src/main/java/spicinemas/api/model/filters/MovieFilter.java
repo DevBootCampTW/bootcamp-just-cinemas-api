@@ -7,6 +7,8 @@ import spicinemas.api.model.type.MovieLocation;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class MovieFilter {
 
@@ -22,12 +24,12 @@ public class MovieFilter {
     }
 
     public List<Movie> filter(List<Movie> movies){
-        List<Movie> filteredMovies = new LinkedList<>(movies);
+        Stream<Movie> filteredMovies = movies.stream();
         for(Filter filter : filters){
             filteredMovies = filter.filter(filteredMovies);
         }
 
-        return filteredMovies;
+        return filteredMovies.collect(Collectors.toList());
     }
 
     public void addLocationFilter(MovieLocation location) {

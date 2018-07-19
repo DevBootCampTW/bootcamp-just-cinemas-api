@@ -2,9 +2,7 @@ package spicinemas.api.model.filters;
 
 import spicinemas.api.model.Movie;
 import spicinemas.api.model.type.MovieLocation;
-
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class LocationFilter implements Filter {
     private final MovieLocation location;
@@ -15,7 +13,7 @@ public class LocationFilter implements Filter {
 
 
     @Override
-    public List<Movie> filter(List<Movie> movies) {
-        return movies.stream().filter(movie -> location == movie.getLocation()).collect(Collectors.toList());
+    public Stream<Movie> filter(Stream<Movie> movies) {
+        return movies.filter(movie -> location == movie.getLocation());
     }
 }

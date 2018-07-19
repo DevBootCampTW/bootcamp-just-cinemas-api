@@ -2,9 +2,7 @@ package spicinemas.api.model.filters;
 
 import spicinemas.api.model.Movie;
 import spicinemas.api.model.type.MovieLanguage;
-
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class LanguageFilter implements Filter {
 
@@ -16,7 +14,7 @@ public class LanguageFilter implements Filter {
 
 
     @Override
-    public List<Movie> filter(List<Movie> movies) {
-        return movies.stream().filter(movie -> language == movie.getLanguage()).collect(Collectors.toList());
+    public Stream<Movie> filter(Stream<Movie> movies){
+        return movies.filter(movie -> language == movie.getLanguage());
     }
 }
