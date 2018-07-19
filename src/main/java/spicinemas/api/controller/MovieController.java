@@ -24,14 +24,6 @@ public class MovieController {
         this.movieService = movieService;
     }
 
-    @RequestMapping(value = "/movies/now-showing",
-            method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Movie> getNowShowingMovies() {
-
-        MovieFilter filter = new MovieFilter();
-        return movieService.getMovieList(filter);
-    }
-
     @RequestMapping(value = "/movies",
             method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Movie> getMovies(
@@ -52,10 +44,10 @@ public class MovieController {
                 filter.addListingTypeFilter(MovieListingType.valueOf(listingType));
             }
             if(isValidParam(language)){
-                filter.addLanguageFilter(MovieLanguage.valueOf(language));
+                filter.addLanguageFilter(MovieLanguage.valueOf(language.toUpperCase()));
             }
             if(isValidParam(location)){
-                filter.addLocationFilter(MovieLocation.valueOf(location));
+                filter.addLocationFilter(MovieLocation.valueOf(location.toUpperCase()));
             }
         } catch (IllegalArgumentException e)
         {

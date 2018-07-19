@@ -39,12 +39,22 @@ public class MovieControllerTest {
         movieList.add(movie);
         when(movieService.getMovieList(any(MovieFilter.class))).thenReturn(movieList);
 
-        Assert.assertEquals(movieList, controller.getMovies(null, null, null));
+        Assert.assertEquals(movieList, controller.getMovies("NOW_SHOWING", "ENGLISH", "PUNE"));
     }
 
     @Test(expected = InvalidRequestException.class)
-    public void testGetMoviesThrowsInvalidRequestException() {
-        controller.getMovies("INVALID_VALUE", "INVALID_LANGUAGE", "INVALID_LOCATION");
+    public void testGetMoviesWhenListingTypeIsInvalidThenThrowsInvalidRequestException() {
+        controller.getMovies("INVALID_VALUE", "ENGLISH", "PUNE");
+    }
+
+    @Test(expected = InvalidRequestException.class)
+    public void testGetMoviesWhenLanguageIsInvalidThenThrowsInvalidRequestException() {
+        controller.getMovies("NOW_SHOWING", "INVALID_LANGUAGE", "PUNE");
+    }
+
+    @Test(expected = InvalidRequestException.class)
+    public void testGetMoviesWhenLocationIsInvalidThenThrowsInvalidRequestException() {
+        controller.getMovies("NOW_SHOWING", "ENGLISH", "INVALID_LOCATION");
     }
 
     @Test
